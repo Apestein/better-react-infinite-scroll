@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react"
 
 interface InfiniteScrollProps extends React.ComponentPropsWithRef<"div"> {
-  fetchNextPage: () => void | any
+  fetchNextPage: () => any
   hasNextPage: boolean
   loadingMessage: React.ReactNode
   endingMessage: React.ReactNode
