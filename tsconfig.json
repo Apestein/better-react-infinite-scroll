@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["src"],
+  "include": ["src", "package"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
