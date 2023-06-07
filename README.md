@@ -1,4 +1,4 @@
-A react infinite scroll component made with modern Intersection Observer API, meaning it will be much more performant. Small and easy to customize, written with typescript as a functional component Supports both cjs and mjs.
+A react infinite scroll component made with modern Intersection Observer API, meaning it will be much more performant. Small and easy to customize, written with typescript as a functional component. Supports both cjs and mjs.
 
 I made this component because I found other solutions such as react-finite-scroll-component and react-infinite-scroller was large, written as class component, and unnecessarily hard to customize.
 
@@ -124,6 +124,7 @@ return (
 ```
 
 [tRPC docs](https://trpc.io/docs/client/react/useInfiniteQuery)
+
 [React Query docs](https://tanstack.com/query/v4/docs/react/guides/infinite-queries)
 
-If you find this useful please star this repo on [Github](https://github.com/Apestein/better-react-infinite-scroll)
+## If you find this useful please star this repo on [Github](https://github.com/Apestein/better-react-infinite-scroll)
