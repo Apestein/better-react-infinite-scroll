@@ -21,7 +21,7 @@ return (
 )
 ```
 
-## Or just copy and paste...
+## Install or just copy and paste...
 
 ```js
 import React, { useEffect, useRef } from "react"
@@ -79,6 +79,8 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
 ## Full example with tRPC and React Query (TanStack Query)
 
 ```js
+import InfiniteScroller from "better-react-infinite-scroll"
+
 //if using with tRPC
 const { data, fetchNextPage, hasNextPage } = api.main.getAll.useInfiniteQuery(
   {
