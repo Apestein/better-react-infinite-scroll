@@ -1,6 +1,6 @@
 A react infinite scroll component made with modern Intersection Observer API, meaning it will be much more performant. Small and easy to customize, written with typescript as a functional component.
 
-I made this component because I found other solutions such as react-finite-scroll-component and react-infinite-scroller was large, written as class component, and unnecessarily hard to customize.
+I made this component because I found other solutions such as [react-finite-scroll-component](https://www.npmjs.com/package/react-infinite-scroll-component) and [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller) was large, written as class component, and unnecessarily hard to customize.
 
 ## [Demo](https://better-react-infinite-scroll.vercel.app/)
 
@@ -69,12 +69,12 @@ import InfiniteScroller from "better-react-infinite-scroll";
 return (
   <InfiniteScroller
     fetchNextPage={fetchNextPage}
-    hasNextPage={true}
+    hasNextPage={hasNextPage}
     loadingMessage={<p>Loading...</p>}
     endingMessage={<p>The beginning of time...</p>}
   >
     {elements.map((el) => (
-      <li key={el.id}>{el}</li>
+      <div key={el.id}>{el}</div>
     ))}
   </InfiniteScroller>
 );
@@ -85,19 +85,23 @@ return (
 For inverse scroll, use flex-direction: column-reverse. Scoller height must be defined. Here we use tailwind flex-1 (flex: 1 1 0%) but height: 300px would also work for example.
 
 ```js
-<div className="flex h-screen flex-col">
-  <InfiniteScroller
-    fetchNextPage={fetchNextPage}
-    hasNextPage={hasNextPage}
-    loadingMessage={<p>Loading...</p>}
-    endingMessage={<p>The beginning of time...</p>}
-    className="flex flex-1 flex-col-reverse overflow-auto"
-  >
-    {elements.map((el) => (
-      <div key={crypto.randomUUID()}>{el}</div>
-    ))}
-  </InfiniteScroller>
-</div>
+import InfiniteScroller from "better-react-infinite-scroll";
+
+return (
+  <div className="flex h-screen flex-col">
+    <InfiniteScroller
+      fetchNextPage={fetchNextPage}
+      hasNextPage={hasNextPage}
+      loadingMessage={<p>Loading...</p>}
+      endingMessage={<p>The beginning of time...</p>}
+      className="flex flex-1 flex-col-reverse overflow-auto"
+    >
+      {elements.map((el) => (
+        <div key={el.id}>{el}</div>
+      ))}
+    </InfiniteScroller>
+  </div>
+);
 ```
 
 ## Full example with tRPC and React Query (TanStack Query)
