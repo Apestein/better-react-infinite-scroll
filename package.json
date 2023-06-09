@@ -1,9 +1,8 @@
 {
   "name": "better-react-infinite-scroll",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Infinite scroll component for react.",
-  "source": "package/index.tsx",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

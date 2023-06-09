@@ -41,7 +41,7 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
 
   return (
     <div {...rest}>
-      <ul>{children}</ul>
+      {children}
       <div ref={observerTarget}></div>
       {hasNextPage && loadingMessage}
       {!hasNextPage && endingMessage}
