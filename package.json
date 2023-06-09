@@ -1,7 +1,7 @@
 {
   "name": "better-react-infinite-scroll",
   "license": "MIT",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
     "preview": "vite preview",
     "typecheck": "tsc",
     "build-package": "tsup package/index.tsx --format cjs,esm --dts",
-    "release": "pnpm run build && changeset publish"
+    "release": "pnpm run build-package && changeset publish"
   },
   "dependencies": {
     "react": "^18.2.0",
