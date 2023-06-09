@@ -85,11 +85,10 @@ return (
 For inverse scroll, use flex-direction: column-reverse. Scoller height must be defined. Here we use tailwind flex-1 (flex: 1 1 0%) but height: 300px would also work for example.
 
 ```js
-<div className="flex h-screen flex-col bg-black text-center text-xl text-white">
-  <h1 className="underline">Inverse Scroll</h1>
+<div className="flex h-screen flex-col">
   <InfiniteScroller
-    fetchNextPage={add5}
-    hasNextPage={true}
+    fetchNextPage={fetchNextPage}
+    hasNextPage={hasNextPage}
     loadingMessage={<p>Loading...</p>}
     endingMessage={<p>The beginning of time...</p>}
     className="flex flex-1 flex-col-reverse overflow-auto"
