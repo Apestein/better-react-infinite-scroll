@@ -1,5 +1,11 @@
 # better-react-infinite-scroll
 
+## 0.1.5
+
+### Patch Changes
+
+- d85822c: test
+
 ## 0.0.6
 
 ### Patch Changes
