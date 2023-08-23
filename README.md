@@ -6,7 +6,7 @@ I made this component because I found other solutions such as [react-finite-scro
 
 ## [Source Code](https://github.com/Apestein/better-react-infinite-scroll/blob/main/src/App.tsx)
 
-## Install or just copy and paste...
+## Install or just copy and paste below.
 
 ```js
 import React, { useEffect, useRef } from "react";
@@ -17,7 +17,6 @@ interface InfiniteScrollProps extends React.ComponentPropsWithRef<"div"> {
   loadingMessage: React.ReactNode;
   endingMessage: React.ReactNode;
 }
-
 export default function InfiniteScroller(props: InfiniteScrollProps) {
   const {
     fetchNextPage,
@@ -32,9 +31,7 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
-          void fetchNextPage();
-        }
+        if (entries[0]?.isIntersecting) fetchNextPage();
       },
       { threshold: 1 }
     );
@@ -43,19 +40,14 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
       observer.observe(observerTarget.current);
     }
 
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, [observerTarget]);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div {...rest} style={{ overflowAnchor: "none" }}>
       {children}
-      <div ref={observerTarget}></div>
-      {hasNextPage && loadingMessage}
-      {!hasNextPage && endingMessage}
+      <div ref={observerTarget} />
+      {hasNextPage ? loadingMessage : endingMessage}
     </div>
   );
 }
@@ -72,6 +64,7 @@ return (
     hasNextPage={hasNextPage}
     loadingMessage={<p>Loading...</p>}
     endingMessage={<p>The beginning of time...</p>}
+    // className="overflow-auto" <= scroll target, may or may not need this
   >
     {elements.map((el) => (
       <div key={el.id}>{el}</div>
@@ -102,6 +95,31 @@ return (
     </InfiniteScroller>
   </div>
 );
+```
+
+## Need a grid to infinite scroll? Try this modification.
+
+```js
+...
+return (
+    <section {...rest} style={{ overflowAnchor: "none" }}>
+      <ul className="grid ...">
+        {children}
+      </ul>
+      <div ref={observerTarget} />
+      {hasNextPage ? loadingMessage : endingMessage}
+    </section>
+  );
+```
+
+## Important Tip
+
+Important thing to understand is inside IntersectionObserver callback function, you must use refs instead of state. That is because of scoping, the callback is only created once and all the variables inside are snapshotted. To get around this you need to use refs. There maybe other ways, I'm just listing what I know.
+
+```js
+const observer = new IntersectionObserver((entries) => {
+  if (!hasNextPageRef.current) return; // <= must use ref, don't use state
+});
 ```
 
 ## Full example with tRPC and React Query (TanStack Query)

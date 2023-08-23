@@ -6,7 +6,6 @@ interface InfiniteScrollProps extends React.ComponentPropsWithRef<"div"> {
   loadingMessage: React.ReactNode;
   endingMessage: React.ReactNode;
 }
-
 export default function InfiniteScroller(props: InfiniteScrollProps) {
   const {
     fetchNextPage,
@@ -21,9 +20,7 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0]?.isIntersecting) {
-          void fetchNextPage();
-        }
+        if (entries[0]?.isIntersecting) fetchNextPage();
       },
       { threshold: 1 }
     );
@@ -32,19 +29,14 @@ export default function InfiniteScroller(props: InfiniteScrollProps) {
       observer.observe(observerTarget.current);
     }
 
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-      }
-    };
-  }, [observerTarget]);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div {...rest} style={{ overflowAnchor: "none" }}>
       {children}
-      <div ref={observerTarget}></div>
-      {hasNextPage && loadingMessage}
-      {!hasNextPage && endingMessage}
+      <div ref={observerTarget} />
+      {hasNextPage ? loadingMessage : endingMessage}
     </div>
   );
 }
