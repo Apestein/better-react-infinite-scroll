@@ -1,5 +1,11 @@
 # better-react-infinite-scroll
 
+## 0.1.6
+
+### Patch Changes
+
+- e44c674: update docs + small refactor
+
 ## 0.1.5
 
 ### Patch Changes
