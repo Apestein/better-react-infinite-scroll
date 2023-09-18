@@ -1,42 +1,51 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
-interface InfiniteScrollProps extends React.ComponentPropsWithRef<"div"> {
-  fetchNextPage: () => any;
+interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
+  fetchNextPage: () => void;
   hasNextPage: boolean;
   loadingMessage: React.ReactNode;
   endingMessage: React.ReactNode;
 }
-export default function InfiniteScroller(props: InfiniteScrollProps) {
-  const {
-    fetchNextPage,
-    hasNextPage,
-    loadingMessage,
-    endingMessage,
-    children,
-    ...rest
-  } = props;
-  const observerTarget = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) fetchNextPage();
-      },
-      { threshold: 1 }
+export const InfiniteScroller = React.forwardRef<
+  HTMLDivElement,
+  InfiniteScrollProps
+>(
+  (
+    {
+      fetchNextPage,
+      hasNextPage,
+      endingMessage,
+      loadingMessage,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const observerTarget = React.useRef(null);
+
+    React.useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) fetchNextPage();
+        },
+        { threshold: 1 }
+      );
+
+      if (observerTarget.current) {
+        observer.observe(observerTarget.current);
+      }
+
+      return () => observer.disconnect();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <div ref={ref} {...props} style={{ overflowAnchor: "none" }}>
+        {children}
+        <div ref={observerTarget} />
+        {hasNextPage ? loadingMessage : endingMessage}
+      </div>
     );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div {...rest} style={{ overflowAnchor: "none" }}>
-      {children}
-      <div ref={observerTarget} />
-      {hasNextPage ? loadingMessage : endingMessage}
-    </div>
-  );
-}
+  }
+);

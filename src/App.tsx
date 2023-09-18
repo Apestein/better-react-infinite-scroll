@@ -1,4 +1,4 @@
-import InfiniteScroller from "../package/index";
+import { InfiniteScroller } from "../package/index";
 import { useState } from "react";
 
 function App() {
