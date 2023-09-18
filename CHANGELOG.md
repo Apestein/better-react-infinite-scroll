@@ -1,5 +1,11 @@
 # better-react-infinite-scroll
 
+## 0.1.7
+
+### Patch Changes
+
+- 1c033e1: Feature: forward ref
+
 ## 0.1.6
 
 ### Patch Changes
