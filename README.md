@@ -8,54 +8,63 @@ I made this component because I found other solutions such as [react-finite-scro
 
 ## Install or just copy and paste below.
 
-```js
-import React, { useEffect, useRef } from "react";
+```ts
+import React from "react";
 
-interface InfiniteScrollProps extends React.ComponentPropsWithRef<"div"> {
-  fetchNextPage: () => any;
+interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
+  fetchNextPage: () => void;
   hasNextPage: boolean;
   loadingMessage: React.ReactNode;
   endingMessage: React.ReactNode;
 }
-export default function InfiniteScroller(props: InfiniteScrollProps) {
-  const {
-    fetchNextPage,
-    hasNextPage,
-    loadingMessage,
-    endingMessage,
-    children,
-    ...rest
-  } = props;
-  const observerTarget = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) fetchNextPage();
-      },
-      { threshold: 1 }
+export const InfiniteScroller = React.forwardRef<
+  HTMLDivElement,
+  InfiniteScrollProps
+>(
+  (
+    {
+      fetchNextPage,
+      hasNextPage,
+      endingMessage,
+      loadingMessage,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const observerTarget = React.useRef(null);
+
+    React.useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) fetchNextPage();
+        },
+        { threshold: 1 }
+      );
+
+      if (observerTarget.current) {
+        observer.observe(observerTarget.current);
+      }
+
+      return () => observer.disconnect();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <div ref={ref} {...props} style={{ overflowAnchor: "none" }}>
+        {children}
+        <div ref={observerTarget} />
+        {hasNextPage ? loadingMessage : endingMessage}
+      </div>
     );
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div {...rest} style={{ overflowAnchor: "none" }}>
-      {children}
-      <div ref={observerTarget} />
-      {hasNextPage ? loadingMessage : endingMessage}
-    </div>
-  );
-}
+  }
+);
 ```
 
 ## How to use: normal scroll
 
-```js
+```ts
 import InfiniteScroller from "better-react-infinite-scroll";
 
 return (
@@ -77,7 +86,7 @@ return (
 
 For inverse scroll, use flex-direction: column-reverse. Scoller height must be defined. Here we use tailwind flex-1 (flex: 1 1 0%) but height: 300px would also work for example.
 
-```js
+```ts
 import InfiniteScroller from "better-react-infinite-scroll";
 
 return (
@@ -99,10 +108,10 @@ return (
 
 ## Need a grid to infinite scroll? Try this modification.
 
-```js
+```ts
 ...
 return (
-    <section {...rest} style={{ overflowAnchor: "none" }}>
+    <section {...props} style={{ overflowAnchor: "none" }}>
       <ul className="grid ...">
         {children}
       </ul>
