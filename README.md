@@ -2,7 +2,7 @@ A react infinite scroll component made with modern Intersection Observer API, me
 
 I made this component because I found other solutions such as [react-finite-scroll-component](https://www.npmjs.com/package/react-infinite-scroll-component) and [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller) was large, written as class component, and unnecessarily hard to customize.
 
-## [Demo](https://better-react-infinite-scroll.vercel.app/)
+## [Demo](https://codesandbox.io/p/github/Apestein/better-react-infinite-scroll/main)
 
 ## [Source Code](https://github.com/Apestein/better-react-infinite-scroll/blob/main/src/App.tsx)
 
