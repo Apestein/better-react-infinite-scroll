@@ -1,5 +1,12 @@
 # better-react-infinite-scroll
 
+## 0.1.8
+
+### Patch Changes
+
+- fa978bb: Update readme.md
+- f986c95: Update demo link
+
 ## 0.1.7
 
 ### Patch Changes
