@@ -18,6 +18,7 @@ interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   endingMessage: React.ReactNode;
 }
 
+// eslint-disable-next-line react/display-name
 export const InfiniteScroller = React.forwardRef<
   HTMLDivElement,
   InfiniteScrollProps
@@ -65,7 +66,7 @@ export const InfiniteScroller = React.forwardRef<
 ## How to use: normal scroll
 
 ```ts
-import InfiniteScroller from "better-react-infinite-scroll";
+import { InfiniteScroller } from "better-react-infinite-scroll";
 
 return (
   <InfiniteScroller
@@ -87,7 +88,7 @@ return (
 For inverse scroll, use flex-direction: column-reverse. Scoller height must be defined. Here we use tailwind flex-1 (flex: 1 1 0%) but height: 300px would also work for example.
 
 ```ts
-import InfiniteScroller from "better-react-infinite-scroll";
+import { InfiniteScroller } from "better-react-infinite-scroll";
 
 return (
   <div className="flex h-screen flex-col">
