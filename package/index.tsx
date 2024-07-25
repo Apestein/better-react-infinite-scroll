@@ -27,7 +27,7 @@ export const InfiniteScroller = React.forwardRef<
     React.useEffect(() => {
       const observer = new IntersectionObserver(
         (entries) => {
-          if (entries[0]?.isIntersecting) fetchNextPage();
+          if (entries[0]?.isIntersecting && hasNextPage) fetchNextPage();
         },
         { threshold: 1 }
       );
