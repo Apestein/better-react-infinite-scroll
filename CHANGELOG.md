@@ -1,5 +1,11 @@
 # better-react-infinite-scroll
 
+## 0.1.10
+
+### Patch Changes
+
+- 47d7508: update version
+
 ## 0.1.9
 
 ### Patch Changes
