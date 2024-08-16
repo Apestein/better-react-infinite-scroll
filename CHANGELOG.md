@@ -1,5 +1,11 @@
 # better-react-infinite-scroll
 
+## 0.2.0
+
+### Minor Changes
+
+- 479bb3b: update README
+
 ## 0.1.10
 
 ### Patch Changes
