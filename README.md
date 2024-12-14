@@ -1,6 +1,4 @@
-Intended to be a complete guide to infinite scroll in React. Nothing to install, just copy/paste and customize. Examples with Next.js / Tailwind / Tanstack Query / and Tanstack Virtual. 
-
-I made this component because I found other solutions such as [react-finite-scroll-component](https://www.npmjs.com/package/react-infinite-scroll-component) and [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller) was large, written as class component, and unnecessarily hard to customize.
+Intended to be a complete guide to infinite scroll in React. Nothing to install, just copy/paste and customize. Examples with Next.js / Tailwind / Tanstack Query / and Tanstack Virtual. This will be the best repo to reference when implementing an infinite scroll feature in React. Infinite scroll feature can be quite hard, especially for bi-directional scroll and virtual scroll (for very large list) support. I hope this repo can save people some time. Please star this repo if you find it helpful, thanks.
 
 ## [Demo](https://stackblitz.com/~/github.com/Apestein/better-react-infinite-scroll)
 
