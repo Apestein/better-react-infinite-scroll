@@ -8,7 +8,7 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 async function fetchInfiniteData(limit: number, offset: number = 0) {
   const rows = new Array(limit)
     .fill(0)
-    .map((_, i) => `Async loaded row #${i + offset * limit}`);
+    .map((_, i) => `row #${i + offset * limit}`);
 
   await new Promise((r) => setTimeout(r, 500));
 

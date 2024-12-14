@@ -18,7 +18,7 @@ export function PreInfiniteScrollSection() {
   return (
     <section>
       <h1 className="font-bold">Prefetch suspense example</h1>
-      <p>Notice this loads faster</p>
+      <p>this loads faster</p>
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}

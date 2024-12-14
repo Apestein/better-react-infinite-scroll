@@ -7,7 +7,7 @@ import React from "react";
 async function fetchInfiniteData(limit: number, cursor: number = 0) {
   const rows = new Array(limit)
     .fill(0)
-    .map((_, i) => `Async loaded row #${i + cursor * limit}`)
+    .map((_, i) => `row #${i + cursor * limit}`)
     .map((i) => ({ foo: i, id: crypto.randomUUID() }));
 
   await new Promise((r) => setTimeout(r, 500));

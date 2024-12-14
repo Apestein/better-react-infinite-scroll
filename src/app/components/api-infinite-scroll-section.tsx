@@ -28,7 +28,7 @@ export function ApiInfiniteScrollSection() {
   return (
     <section>
       <h1 className="font-bold">Route-handler Example</h1>
-      <p>Notice this loads slower than prefetch</p>
+      <p>this loads slower than prefetch</p>
       <InfiniteScroller
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
