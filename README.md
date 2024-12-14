@@ -1,123 +1,36 @@
-A react infinite scroll component made with modern Intersection Observer API, meaning it will be much more performant. Small and easy to customize, written with typescript as a functional component.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-I made this component because I found other solutions such as [react-finite-scroll-component](https://www.npmjs.com/package/react-infinite-scroll-component) and [react-infinite-scroller](https://www.npmjs.com/package/react-infinite-scroller) was large, written as class component, and unnecessarily hard to customize.
+## Getting Started
 
-## [Demo](https://codesandbox.io/p/github/Apestein/better-react-infinite-scroll/main)
+First, run the development server:
 
-## [Source Code](https://github.com/Apestein/better-react-infinite-scroll/blob/main/src/App.tsx)
-
-## Install or just copy and paste below.
-
-```ts
-import React from "react";
-
-interface InfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
-  fetchNextPage: () => void;
-  hasNextPage: boolean;
-  loadingMessage: React.ReactNode;
-  endingMessage: React.ReactNode;
-}
-
-// eslint-disable-next-line react/display-name
-export const InfiniteScroller = React.forwardRef<
-  HTMLDivElement,
-  InfiniteScrollProps
->(
-  (
-    {
-      fetchNextPage,
-      hasNextPage,
-      endingMessage,
-      loadingMessage,
-      children,
-      ...props
-    },
-    ref
-  ) => {
-    const observerTarget = React.useRef(null);
-
-    React.useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting && hasNextPage) fetchNextPage();
-        },
-        { threshold: 1 }
-      );
-
-      if (observerTarget.current) {
-        observer.observe(observerTarget.current);
-      }
-
-      return () => observer.disconnect();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    return (
-      <div ref={ref} {...props} style={{ overflowAnchor: "none" }}>
-        {children}
-        <div ref={observerTarget} />
-        {hasNextPage ? loadingMessage : endingMessage}
-      </div>
-    );
-  }
-);
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## How to use: normal scroll
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```ts
-import { InfiniteScroller } from "better-react-infinite-scroll";
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-return (
-  <InfiniteScroller
-    fetchNextPage={fetchNextPage}
-    hasNextPage={hasNextPage}
-    loadingMessage={<p>Loading...</p>}
-    endingMessage={<p>The beginning of time...</p>}
-    // className="overflow-auto" <= scroll target, may or may not need this
-  >
-    {elements.map((el) => (
-      <div key={el.id}>{el}</div>
-    ))}
-  </InfiniteScroller>
-);
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## How to use: inverse scroll
+## Learn More
 
-For inverse scroll, use flex-direction: column-reverse. Scoller height must be defined. Here we use tailwind flex-1 (flex: 1 1 0%) but height: 300px would also work for example.
+To learn more about Next.js, take a look at the following resources:
 
-```ts
-import { InfiniteScroller } from "better-react-infinite-scroll";
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-return (
-  <div className="flex h-screen flex-col">
-    <InfiniteScroller
-      fetchNextPage={fetchNextPage}
-      hasNextPage={hasNextPage}
-      loadingMessage={<p>Loading...</p>}
-      endingMessage={<p>The beginning of time...</p>}
-      className="flex flex-1 flex-col-reverse overflow-auto"
-    >
-      {elements.map((el) => (
-        <div key={el.id}>{el}</div>
-      ))}
-    </InfiniteScroller>
-  </div>
-);
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Need a grid to infinite scroll? Try this modification.
+## Deploy on Vercel
 
-```ts
-...
-return (
-    <section {...props} style={{ overflowAnchor: "none" }}>
-      <ul className="grid ...">
-        {children}
-      </ul>
-      <div ref={observerTarget} />
-      {hasNextPage ? loadingMessage : endingMessage}
-    </section>
-  );
-```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
