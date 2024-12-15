@@ -20,6 +20,7 @@ async function fetchInfiniteData(limit: number, cursor: number = 0) {
 }
 
 export function BiInfiniteScrollSection() {
+  const MAX_PAGES = 3;
   const {
     data,
     error,
@@ -34,6 +35,7 @@ export function BiInfiniteScrollSection() {
     initialPageParam: 0,
     getNextPageParam: (nextPage, pages) => nextPage.nextCursor,
     getPreviousPageParam: (prevPage, pages) => prevPage.prevCursor,
+    maxPages: MAX_PAGES, //should only set maxPages for large list, or whenever you notice performance issues
   });
 
   if (status === "error") return <p>Error {error.message}</p>;
@@ -49,6 +51,10 @@ export function BiInfiniteScrollSection() {
         hasPreviousPage={hasPreviousPage}
         endingMessage="end"
         loadingMessage="loading..."
+        useMaxPages={{
+          maxPages: MAX_PAGES,
+          pageParamsLength: data.pageParams.length,
+        }}
         className="h-72 overflow-auto border-2 p-2 text-xl"
       >
         {data.pages.map((page, i) => (

@@ -3,8 +3,11 @@ Intended to be a complete guide to infinite scroll in React. Nothing to install,
 ## [Demo](https://stackblitz.com/~/github.com/Apestein/better-react-infinite-scroll)
 
 ## Intersection observer API (good for small list)
+
 ### Copy & paste this [component](https://github.com/Apestein/better-react-infinite-scroll/blob/main/src/app/components/infinite-scrollers.tsx) into your codebase and use like below👇
+
 ### Normal Scroll Example
+
 ```tsx
 "use client";
 import { InfiniteScroller } from "./infinite-scrollers";
@@ -61,7 +64,9 @@ export function NormalInfiniteScrollSection() {
   );
 }
 ```
+
 ### Inverse Scroll Example
+
 ```tsx
 "use client";
 import { InfiniteScroller } from "./infinite-scrollers";
@@ -112,7 +117,8 @@ export function InverseInfiniteScrollSection() {
                   {el.foo}
                 </p>
               ))
-              .reverse()} //reverse the array
+              .reverse()}{" "}
+            //reverse the array
           </React.Fragment>
         ))}
       </InfiniteScroller>
@@ -120,7 +126,9 @@ export function InverseInfiniteScrollSection() {
   );
 }
 ```
+
 ### Bi-directional Scroll Example
+
 ```tsx
 "use client";
 import { BiInfiniteScroller } from "./infinite-scrollers";
@@ -144,6 +152,7 @@ async function fetchInfiniteData(limit: number, cursor: number = 0) {
 }
 
 export function BiInfiniteScrollSection() {
+  const MAX_PAGES = 3;
   const {
     data,
     error,
@@ -158,6 +167,7 @@ export function BiInfiniteScrollSection() {
     initialPageParam: 0,
     getNextPageParam: (nextPage, pages) => nextPage.nextCursor,
     getPreviousPageParam: (prevPage, pages) => prevPage.prevCursor,
+    maxPages: MAX_PAGES, //should only set maxPages for large list, or whenever you notice performance issues
   });
 
   if (status === "error") return <p>Error {error.message}</p>;
@@ -173,6 +183,10 @@ export function BiInfiniteScrollSection() {
         hasPreviousPage={hasPreviousPage}
         endingMessage="end"
         loadingMessage="loading..."
+        useMaxPages={{
+          maxPages: MAX_PAGES,
+          pageParamsLength: data.pageParams.length,
+        }}
         className="h-72 overflow-auto border-2 p-2 text-xl"
       >
         {data.pages.map((page, i) => (
@@ -189,8 +203,11 @@ export function BiInfiniteScrollSection() {
   );
 }
 ```
+
 ## Tanstack Virtual (good for large list)
+
 ### Normal Virtual Scroll Example
+
 ```tsx
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
@@ -300,7 +317,9 @@ export function UniVirtualInfiniteScrollSection() {
   );
 }
 ```
+
 ### Bi-directional Virtual Scroll Example
+
 ```tsx
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
@@ -454,8 +473,11 @@ export function BiVirtualInfiniteScrollSection() {
   );
 }
 ```
+
 ## More Examples
+
 ### Prefetch Suspense with Next.js server actions (prefetch on the server, initial load will be faster)
+
 ```tsx
 ///page.tsx
 import React, { Suspense } from "react";
@@ -522,7 +544,7 @@ async function PrefetchWrapper() {
 }
 
 //prefetch-infinite-scroll-section.tsx
-"use client";
+("use client");
 import { InfiniteScroller } from "./infinite-scrollers";
 import { getInfiniteDataAction } from "../actions";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -564,7 +586,9 @@ export function PreInfiniteScrollSection() {
   );
 }
 ```
+
 ### Route handler example with Next.js
+
 ```tsx
 //app/api/foo/route.ts
 import { type NextRequest, NextResponse } from "next/server";
@@ -593,7 +617,7 @@ export async function GET(request: NextRequest) {
 }
 
 //api-infinite-scroll-section.tsx
-"use client";
+("use client");
 import { InfiniteScroller } from "./infinite-scrollers";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";

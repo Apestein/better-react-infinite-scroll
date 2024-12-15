@@ -59,6 +59,7 @@ interface BiInfiniteScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   hasPreviousPage: boolean;
   loadingMessage: React.ReactNode;
   endingMessage: React.ReactNode;
+  useMaxPages?: { maxPages: number; pageParamsLength: number };
 }
 
 export function BiInfiniteScroller({
@@ -68,13 +69,17 @@ export function BiInfiniteScroller({
   hasPreviousPage,
   endingMessage,
   loadingMessage,
+  useMaxPages,
   children,
   ...props
 }: BiInfiniteScrollProps) {
   const nextObserverTarget = React.useRef(null);
   const prevObserverTarget = React.useRef(null);
   const parentRef = React.useRef<HTMLDivElement>(null);
-  const prevScrollHeight = React.useRef<number>(undefined);
+  const prevScrollHeight = React.useRef<number>(null);
+  const prevScrollTop = React.useRef<number>(null);
+  const nextAnchor = React.useRef<string>(null);
+  const prevAnchor = React.useRef<string>(null);
 
   React.useEffect(() => {
     const observer = new IntersectionObserver(
@@ -84,12 +89,27 @@ export function BiInfiniteScroller({
             entries.at(0)?.target === nextObserverTarget.current &&
             hasNextPage
           ) {
+            if (
+              (!useMaxPages ||
+                useMaxPages.pageParamsLength < useMaxPages.maxPages) &&
+              parentRef.current
+            ) {
+              prevScrollTop.current = parentRef.current.scrollTop;
+              prevScrollHeight.current = parentRef.current.scrollHeight;
+            }
+            nextAnchor.current = crypto.randomUUID();
             fetchNextPage();
           } else if (
             entries.at(0)?.target === prevObserverTarget.current &&
             hasPreviousPage
           ) {
-            prevScrollHeight.current = parentRef.current?.scrollHeight;
+            if (
+              (!useMaxPages ||
+                useMaxPages.pageParamsLength < useMaxPages.maxPages) &&
+              parentRef.current
+            )
+              prevScrollHeight.current = parentRef.current.scrollHeight;
+            prevAnchor.current = crypto.randomUUID();
             fetchPreviousPage();
           }
         }
@@ -105,16 +125,22 @@ export function BiInfiniteScroller({
     }
 
     return () => observer.disconnect();
-  }, [hasNextPage, hasPreviousPage]);
+  }, [hasNextPage, hasPreviousPage, useMaxPages?.pageParamsLength]);
 
   React.useEffect(() => {
     if (parentRef.current && !prevScrollHeight.current)
       parentRef.current.scrollTop = parentRef.current.scrollHeight; //scroll to bottom on initial load, delete if you don't want this behavior
-    else if (parentRef.current && prevScrollHeight.current) {
+
+    if (parentRef.current && prevScrollHeight.current) {
       parentRef.current.scrollTop =
         parentRef.current.scrollHeight - prevScrollHeight.current; //restore scroll position for backwards scroll
     }
-  }, [prevScrollHeight.current]);
+  }, [prevAnchor.current]);
+
+  React.useEffect(() => {
+    if (useMaxPages && parentRef.current && prevScrollTop.current)
+      parentRef.current.scrollTop = prevScrollTop.current; //restore scroll position for forward scroll
+  }, [nextAnchor.current]);
 
   return (
     <div ref={parentRef} {...props}>
