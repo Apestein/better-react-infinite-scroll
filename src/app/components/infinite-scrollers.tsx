@@ -107,8 +107,12 @@ export function BiInfiniteScroller({
               (!useMaxPages ||
                 useMaxPages.pageParamsLength < useMaxPages.maxPages) &&
               parentRef.current
-            )
+            ) {
+              if (prevScrollTop.current && prevScrollHeight.current)
+                prevScrollTop.current +=
+                  parentRef.current.scrollHeight - prevScrollHeight.current;
               prevScrollHeight.current = parentRef.current.scrollHeight;
+            }
             prevAnchor.current = crypto.randomUUID();
             fetchPreviousPage();
           }
@@ -138,8 +142,9 @@ export function BiInfiniteScroller({
   }, [prevAnchor.current]);
 
   React.useEffect(() => {
-    if (useMaxPages && parentRef.current && prevScrollTop.current)
+    if (useMaxPages && parentRef.current && prevScrollTop.current) {
       parentRef.current.scrollTop = prevScrollTop.current; //restore scroll position for forward scroll
+    }
   }, [nextAnchor.current]);
 
   return (
