@@ -40,13 +40,13 @@ export const InfiniteScroller = React.forwardRef<
       }
 
       return () => observer.disconnect();
-    }, []);
+    }, [hasNextPage]);
 
     return (
       <div ref={ref} {...props}>
         {children}
-        <div ref={observerTarget} />
         {hasNextPage ? loadingMessage : endingMessage}
+        <div ref={observerTarget} />
       </div>
     );
   },

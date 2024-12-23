@@ -127,7 +127,7 @@ export function InverseInfiniteScrollSection() {
 }
 ```
 
-### Bi-directional Scroll Example
+### Bi-directional Scroll Example (supports large list by setting maxPages)
 
 ```tsx
 "use client";
@@ -318,7 +318,7 @@ export function UniVirtualInfiniteScrollSection() {
 }
 ```
 
-### Bi-directional Virtual Scroll Example
+### Bi-directional Virtual Scroll Example (doesn't work for dynamic size list items)
 
 ```tsx
 /* eslint-disable react-hooks/exhaustive-deps */
